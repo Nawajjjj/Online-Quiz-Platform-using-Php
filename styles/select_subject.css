@@ -1,0 +1,133 @@
+/* Reset some default styles */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, #6a11cb 0%, #2575fc 100%);
+    color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+    margin: 0;
+    animation: background-animation 15s ease-in-out infinite;
+}
+
+/* Background animation */
+@keyframes background-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+.container {
+    background-color: rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    box-shadow: 0 12px 35px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    max-width: 400px;
+    width: 100%;
+    text-align: center;
+    transform: translateY(30px);
+    opacity: 0;
+    animation: fade-in 1.5s forwards;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.container:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+}
+
+.title {
+    color: #fff;
+    font-size: 26px;
+    margin-bottom: 25px;
+    font-weight: bold;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    animation: slide-up 1s ease-out;
+}
+
+.form-group {
+    margin-bottom: 25px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slide-up 1s 0.5s forwards;
+}
+
+select {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    background-color: rgba(255, 255, 255, 0.8);
+    color: #333;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+select:focus {
+    background-color: #fff;
+    transform: scale(1.02);
+    outline: none;
+}
+
+.form-actions {
+    margin-top: 25px;
+    transform: translateY(20px);
+    opacity: 0;
+    animation: slide-up 1s 0.7s forwards;
+}
+
+.btn-submit {
+    background-color: #ff5f6d;
+    background-image: linear-gradient(45deg, #ff5f6d, #ffc371);
+    color: #fff;
+    padding: 12px 25px;
+    border: none;
+    border-radius: 25px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-submit:hover {
+    transform: translateY(-5px);
+    background-color: #ff4e50;
+    background-image: linear-gradient(45deg, #ff4e50, #f9d423);
+}
+
+/* Keyframe animations */
+@keyframes fade-in {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slide-up {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Background animation */
+@keyframes background-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Add responsiveness */
+@media (max-width: 500px) {
+    .container {
+        padding: 30px;
+    }
+}
