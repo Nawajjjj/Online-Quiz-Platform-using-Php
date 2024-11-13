@@ -36,7 +36,7 @@ session_start();
         <div class="welcome-message" id="home">
             <h1>Welcome to Quiz Master!</h1>
             <p class="description">Challenge yourself and see how much you really know!</p>
-            <a href="quiz.php"><button class="btn">Start the Quiz</button></a>
+            <a href="select_subject.php"><button class="btn">Start the Quiz</button></a>
         </div>
     </header>
 
@@ -86,7 +86,7 @@ session_start();
 
         <!-- Call to Action Section -->
         <div class="cta" id="start">
-            <a href="quiz.php"><button class="btn">Start the Quiz</button></a>
+            <a href="select_subject.php"><button class="btn">Start the Quiz</button></a>
         </div>
 
         <!-- Footer Section -->

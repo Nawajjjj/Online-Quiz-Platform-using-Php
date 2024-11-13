@@ -1,45 +1,51 @@
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #f8f9fa;
-    padding: 30px;
-}
-
-.container {
-    max-width: 800px;
-    margin: auto;
-}
-
-.question-container {
-    background-color: white;
-    border-radius: 10px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-    margin-bottom: 20px;
+    font-family: Arial, sans-serif;
+    margin: 0;
     padding: 20px;
-    transition: transform 0.3s;
-    animation: fadeIn 1s ease forwards;
 }
 
-.question-container:hover {
-    transform: scale(1.02);
+h1 {
+    text-align: center;
 }
 
-.btn-submit {
-    background-color: #28a745;
+.quiz-container {
+    width: 60%;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f7f7f7;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.question {
+    margin-bottom: 15px;
+}
+
+.question p {
+    font-weight: bold;
+}
+
+.question label {
+    display: block;
+    margin: 5px 0;
+}
+
+.question input[type="radio"] {
+    margin-right: 10px;
+}
+
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    font-size: 18px;
-    padding: 10px 20px;
-    border-radius: 5px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.2s;
+    border-radius: 5px;
 }
 
-.btn-submit:hover {
-    background-color: #218838;
-    transform: scale(1.05);
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+button:hover {
+    background-color: #45a049;
 }

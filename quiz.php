@@ -1,79 +1,61 @@
 <?php
-// Connect to the database
-$conn = new mysqli('localhost', 'root', '', 'quizz_platform'); // Updated database name
+// Database connection setup
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "quizz_platform";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
     die("Connection failed: " . $conn->connect_error);
 }
 
-// Fetch the questions from the database
-$sql = "SELECT * FROM questions"; // Assuming the table name is `questions`
+// Fetch questions from the database
+$sql = "SELECT * FROM questions";
 $result = $conn->query($sql);
-?>
 
-<form action="results.php" method="POST">
-    <?php while ($row = $result->fetch_assoc()) { ?>
-        <div>
-            <p><?php echo $row['question_text']; ?></p>
-            <input type="radio" name="question_<?php echo $row['question_id']; ?>" value="1"> <?php echo $row['option1']; ?><br>
-            <input type="radio" name="question_<?php echo $row['question_id']; ?>" value="2"> <?php echo $row['option2']; ?><br>
-            <input type="radio" name="question_<?php echo $row['question_id']; ?>" value="3"> <?php echo $row['option3']; ?><br>
-            <input type="radio" name="question_<?php echo $row['question_id']; ?>" value="4"> <?php echo $row['option4']; ?><br>
-        </div>
-    <?php } ?>
-    <input type="submit" value="Submit">
-</form>
+if ($result->num_rows > 0) {
+    echo "<form id='quizForm' action='results.php' method='post'>";
 
-<?php
+    // Loop through each question
+    while ($row = $result->fetch_assoc()) {
+        $questionId = $row['id'];
+        $question = $row['question'];
+
+        // Display question
+        echo "<h3>$question</h3>";
+
+        // Fetch options for this question
+        $optionSql = "SELECT option1, option2, option3, option4 FROM options WHERE question_id = $questionId";
+        $optionResult = $conn->query($optionSql);
+
+        if ($optionResult->num_rows > 0) {
+            $optionRow = $optionResult->fetch_assoc();
+
+            // Display each option as a radio button
+            echo "<input type='radio' name='answer_$questionId' value='option1'> {$optionRow['option1']}<br>";
+            echo "<input type='radio' name='answer_$questionId' value='option2'> {$optionRow['option2']}<br>";
+            echo "<input type='radio' name='answer_$questionId' value='option3'> {$optionRow['option3']}<br>";
+            echo "<input type='radio' name='answer_$questionId' value='option4'> {$optionRow['option4']}<br><br>";
+        } else {
+            echo "Options not found for question ID $questionId.<br>";
+        }
+    }
+
+    // Link that triggers the form submission
+    echo "<a href='javascript:void(0)' onclick='submitForm()'><input type='button' value='Submit Quiz'></a>";
+    echo "</form>";
+} else {
+    echo "No questions found.";
+}
+
 $conn->close();
 ?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz on <?php echo htmlspecialchars($subject); ?></title>
-    <link href="styles/quiz.css" rel="stylesheet">
-</head>
-<body>
-    <div class="container">
-        <h2 class="text-center mb-4">Quiz on <?php echo htmlspecialchars($subject); ?>!</h2>
-        <form method="POST" action="results.php">
-            <!-- Hidden input to pass the subject to results.php -->
-            <input type="hidden" name="subject" value="<?php echo htmlspecialchars($subject); ?>">
-
-            <?php foreach ($questions as $index => $question): ?>
-                <div class="question-container">
-                    <p><strong><?php echo ($index + 1) . ". " . htmlspecialchars($question['question']); ?></strong></p>
-
-                    <!-- Radio Buttons for Options -->
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="question_<?php echo $question['id']; ?>" value="option1" required>
-                        <label class="form-check-label"><?php echo htmlspecialchars($question['option1']); ?></label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="question_<?php echo $question['id']; ?>" value="option2">
-                        <label class="form-check-label"><?php echo htmlspecialchars($question['option2']); ?></label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="question_<?php echo $question['id']; ?>" value="option3">
-                        <label class="form-check-label"><?php echo htmlspecialchars($question['option3']); ?></label>
-                    </div>
-                    <div class="form-check">
-                        <input class="form-check-input" type="radio" name="question_<?php echo $question['id']; ?>" value="option4">
-                        <label class="form-check-label"><?php echo htmlspecialchars($question['option4']); ?></label>
-                    </div>
-                </div>
-            <?php endforeach; ?>
-
-            <div class="text-center">
-                <input type="submit" class="btn-submit mt-4" value="Submit">
-            </div>
-        </form>
-    </div>
-
-    <?php $conn->close(); // Close the connection after all HTML content ?>
-</body>
-</html>
-
+<script type="text/javascript">
+    function submitForm() {
+        // Submit the form using JavaScript
+        document.getElementById("quizForm").submit();
+    }
+</script>
